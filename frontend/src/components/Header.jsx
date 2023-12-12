@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
+import logo from '../resources/logo.jpg'
 
 const header = () => {
   return (
@@ -9,7 +10,7 @@ const header = () => {
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand><img src="./resources/logo.jpg" alt="Shoe Lifestyle"/></Navbar.Brand>
+            <Navbar.Brand><img src={logo} alt="Shoe Lifestyle" style={{ width: '180px', height: '60px' }}/></Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
