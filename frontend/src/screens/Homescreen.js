@@ -16,7 +16,7 @@ const Homescreen = () => {
     fetchProducts()
 }, []);
   return (
-    <>
+    <div className="">
       <h1>Products</h1>
       <Row>
         {products.map((product) => (
@@ -25,7 +25,7 @@ const Homescreen = () => {
           </Col>
         ))}
       </Row>
-    </>
+    </div>
   );
 };
 

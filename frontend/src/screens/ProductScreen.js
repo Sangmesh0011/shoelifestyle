@@ -1,15 +1,20 @@
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { MdOutlineArrowBack } from "react-icons/md";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import products from "../products";
 import { Row, Col, Image, ListGroup, Button } from "react-bootstrap";
 import Rating from "../components/Rating";
-
+import axios from "axios";
 const ProductScreen = () => {
+  const [product, setProduct] = useState([]);
   const { id: productid } = useParams();
-  const product = products.find((p) => p._id === productid);
-
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get(`/api/products/${productid}`);
+      setProduct(data);
+    };
+    fetchData();
+  }, [productid]);
   return (
     <div className="">
       <Link to="/">
@@ -63,10 +68,8 @@ const ProductScreen = () => {
       </Row>
       <Row className="m-2 p-3 justify-content-center">
         <Col md={6} className="text-center">
-          <Button type='button' disabled={product.countInStock === 0}>
-          
-              <BsFillCartPlusFill /> <span>Add to Cart</span>
-            
+          <Button type="button" disabled={product.countInStock === 0}>
+            <BsFillCartPlusFill /> <span>Add to Cart</span>
           </Button>
         </Col>
       </Row>
