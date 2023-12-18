@@ -7,10 +7,10 @@ import logo from '../resources/logo.jpg'
 const header = () => {
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg="opacity-0" variant="light" expand="lg" className="mx-0 my-0 border-bottom shadow-sm">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand><img src={logo} alt="Shoe Lifestyle" style={{ width: '180px', height: '60px' }}/></Navbar.Brand>
+            <Navbar.Brand><img src={logo} alt="Shoe Lifestyle" className='py-1 px-0 py-0' style={{ width: '220px', height: '40px' }}/></Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

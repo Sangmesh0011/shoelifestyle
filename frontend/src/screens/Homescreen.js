@@ -17,7 +17,7 @@ const Homescreen = () => {
 }, []);
   return (
     <div className="">
-      <h1>Products</h1>
+      <h2 className="font-monospace text-center">Products</h2>
       <Row>
         {products.map((product) => (
           <Col key={product.id} sm={12} md={6} lg={3} xl={3}>
