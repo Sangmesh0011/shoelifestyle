@@ -1,8 +1,8 @@
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { MdOutlineArrowBack } from "react-icons/md";
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Row, Col, Image, ListGroup, Button } from "react-bootstrap";
+import { Form, Row, Col, Image, ListGroup, Button } from "react-bootstrap";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
 //import axios from "axios";
@@ -11,6 +11,7 @@ import Message from "../components/Message";
 const ProductScreen = () => {
   //const [product, setProduct] = useState([]);
   const { id: productid } = useParams();
+  const [qty, setQty] = useState(1);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     const { data } = await axios.get(`/api/products/${productid}`);
@@ -23,6 +24,7 @@ const ProductScreen = () => {
     isLoading,
     error,
   } = useGetProductDetailsQuery(productid);
+
   return (
     <>
       <Link to="/">
@@ -31,9 +33,11 @@ const ProductScreen = () => {
         />
       </Link>
       {isLoading ? (
-        <Loader/>
+        <Loader />
       ) : error ? (
-        <Message variant='danger'>{error?.data?.message || error.error}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <div>
           <Row className="m-2 p-3">
@@ -84,7 +88,25 @@ const ProductScreen = () => {
             </Col>
           </Row>
           <Row className="m-2 p-3 justify-content-center">
-            <Col md={6} className="text-center">
+            <Col md={6} className="text-center fw-bolder">
+              Select the Quantity :{" "}
+            </Col>
+            {product.countInStock > 0 && (
+              <Col md={3}>
+                <Form.Control
+                  as="select"
+                  value={qty}
+                  onChange={(e) => setQty(Number(e.target.value))}
+                >
+                  {[...Array(product.countInStock).keys()].map((x) => (
+                    <option className="text-center" key={x + 1} value={x + 1}>
+                      {x + 1}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Col>
+            )}
+            <Col md={3} className="text-center">
               <Button type="button" disabled={product.countInStock === 0}>
                 <BsFillCartPlusFill /> <span>Add to Cart</span>
               </Button>
