@@ -1,31 +1,42 @@
 import React from "react";
-import { useState,useEffect } from "react";
+//import { useState, useEffect } from "react";
 //import products from "../products";
 import Product from "../components/Product";
 import { Row, Col } from "react-bootstrap";
-import axios from 'axios'
+import { useGetProductsQuery } from "../slices/productsApiSlice";
+//import axios from 'axios'
 
 const Homescreen = () => {
-  const [products,setProducts]=useState([]);
+  //   const [products,setProducts]=useState([]);
 
-  useEffect(() => {
-    const fetchProducts=async()=>{
-      const {data}=await axios.get('/api/products')
-      setProducts(data)
-    }
-    fetchProducts()
-}, []);
+  //   useEffect(() => {
+  //     const fetchProducts=async()=>{
+  //       const {data}=await axios.get('/api/products')
+  //       setProducts(data)
+  //     }
+  //     fetchProducts()
+  // }, []);
+  const { data: products, isLoading, error } = useGetProductsQuery();
+
   return (
-    <div className="">
-      <h2 className="font-monospace text-center">Products</h2>
-      <Row>
-        {products.map((product) => (
-          <Col key={product.id} sm={12} md={6} lg={3} xl={3}>
-            <Product product={product} />
-          </Col>
-        ))}
-      </Row>
-    </div>
+    <>
+      {isLoading ? (
+        <h2>Loading...</h2>
+      ) : error ? (
+        <div>{error?.data?.message || error.error}</div>
+      ) : (
+        <>
+          <h2 className="font-monospace text-center">Products</h2>
+          <Row>
+            {products.map((product) => (
+              <Col key={product.id} sm={12} md={6} lg={3} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+        </>
+      )}
+    </>
   );
 };
 
