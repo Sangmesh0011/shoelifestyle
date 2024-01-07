@@ -1,10 +1,12 @@
 import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Badge, Navbar, Nav, Container } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import logo from '../resources/logo.jpg'
+import {useSelector} from "react-redux";
 
-const header = () => {
+const Header = () => {
+ const {cartItems}=useSelector((state)=> state.cart)
   return (
     <header>
       <Navbar bg="opacity-0" variant="light" expand="lg" className="mx-0 my-0 border-bottom shadow-sm">
@@ -18,6 +20,7 @@ const header = () => {
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <FaShoppingCart /> Cart
+                  {cartItems.length > 0 && (<Badge pill bg="warning" className="mx-2">{cartItems.reduce((a,c)=>a+c.qty,0)}</Badge>)}
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/login">
@@ -33,4 +36,4 @@ const header = () => {
   );
 };
 
-export default header;
+export default Header;

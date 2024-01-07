@@ -1,17 +1,23 @@
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { MdOutlineArrowBack } from "react-icons/md";
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Row, Col, Image, ListGroup, Button } from "react-bootstrap";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
+import {useDispatch} from 'react-redux'
 //import axios from "axios";
+//import add
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 import Message from "../components/Message";
+import {addToCart} from '../slices/cartSlice'
 const ProductScreen = () => {
   //const [product, setProduct] = useState([]);
   const { id: productid } = useParams();
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
   const [qty, setQty] = useState(1);
+  
   // useEffect(() => {
   //   const fetchData = async () => {
   //     const { data } = await axios.get(`/api/products/${productid}`);
@@ -24,7 +30,10 @@ const ProductScreen = () => {
     isLoading,
     error,
   } = useGetProductDetailsQuery(productid);
-
+  const addToCartHandler=()=>{
+    dispatch(addToCart({...product,qty}));
+    navigate('/cart')
+}
   return (
     <>
       <Link to="/">
@@ -107,7 +116,7 @@ const ProductScreen = () => {
               </Col>
             )}
             <Col md={3} className="text-center">
-              <Button type="button" disabled={product.countInStock === 0}>
+              <Button type="button" disabled={product.countInStock === 0} onClick={addToCartHandler}>
                 <BsFillCartPlusFill /> <span>Add to Cart</span>
               </Button>
             </Col>
