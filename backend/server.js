@@ -11,7 +11,7 @@ app.get('/',(req,res)=>{
     res.send("API is running")
 })
 
-app.use(productRoutes);
+app.use('/api/products',productRoutes);
 
 
 app.listen(port,console.log(`App running on port ${port}`))
